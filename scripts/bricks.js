@@ -19,7 +19,7 @@ var brickPadding = 10;
 var brickOffsetTop = 30;
 var brickOffsetLeft = 30;
 var score = 0;
-var lives = 3;
+var lives = 10;
 
 
 var bricks = [];
@@ -105,20 +105,31 @@ function draw() {
  collisionDetection();
 	
 // redirect ball
+	// left wall
  if (x + dx > canvas.width - ballRadius || x + dx < ballRadius) {
 	dx = -dx;
  }
+  //top
  if (y + dy < ballRadius) {
 	dy = -dy;
+	 console.log('top');
  } else if (y + dy > canvas.height - ballRadius) {
-	if (x > paddleX && x < paddleX + paddleWidth) {
-	 dy = -dy;
-	} else {
+	if (x > paddleX && x < paddleX + paddleWidth/2) {
+		console.log('paddle left');
+	  dy = -dy;
+	} else if (x > paddleX + paddleWidth/2 && x < paddleX + paddleWidth) {
+		console.log('paddle right');
+	  dy = -dy;
+	} 
+	else {
+		console.log('one less life');
 		lives --;
 	 	if(!lives) {
+			console.log('game over');
 			alert("Game Over!!!");
 			document.location.reload();
 		} else {
+			console.log('next life');
 			x = canvas.width / 2;
 			y = canvas.height - 30;
 			dx = 4;

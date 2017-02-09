@@ -37,6 +37,7 @@ var brickHeight = 20;
 var brickPadding = 10;
 var brickOffsetTop = 30;
 var brickOffsetLeft = 30;
+var score = 0;
 
 var bricks = [];
 for (c = 0; c < brickColumnCount; c++) {
@@ -87,10 +88,22 @@ function collisionDetection() {
 			if(b.status ==1) {
 				if (x > b.x && x < b.x + brickWidth && y > b.y && y < b.y + brickHeight) {
 					dy = -dy;
+					b.status = 0;
+					score ++;
+					if (score == brickRowCount * brickColumnCount) {
+						alert("You have defeated the brickvaders!");
+						document.location.reload();
+					}
 				}
 			}
 		}
 	}
+}
+
+function drawScore() {
+	ctx.font = "16px Arial";
+	ctx.fillStyle = "#0095DD";
+	ctx.fillText("Score: " + score, 8, 20);
 }
 
 function draw() {
@@ -98,6 +111,7 @@ function draw() {
  drawBricks();
  drawBall();
  drawPaddle();
+ drawScore();
  collisionDetection();
 	
 // redirect ball

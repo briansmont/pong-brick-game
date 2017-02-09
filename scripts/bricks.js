@@ -64,6 +64,21 @@ function drawBricks() {
  }
 }
 
+function drawPermBricks(amount) {
+	var xSpace = (canvas.width / amount) - brickWidth * 1.25;
+	console.log(xSpace);
+	var brickY = 340;
+	var brickX = xSpace
+	for (var b = 0; b < amount; b++) {
+		ctx.beginPath();
+		ctx.rect(brickX, brickY, brickWidth, brickHeight);
+		ctx.fillStyle = "grey";
+		ctx.fill();
+		ctx.closePath();
+		brickX += (xSpace + brickOffsetLeft) ;
+	}
+}
+
 function collisionDetection() {
 	for (c = 0; c < brickColumnCount; c++) {
 		for (r = 0; r< brickRowCount; r++) {
@@ -98,6 +113,7 @@ function drawLives() {
 function draw() {
  ctx.clearRect(0, 0, canvas.width, canvas.height);
  drawBricks();
+ drawPermBricks(3);
  drawBall();
  drawPaddle();
  drawScore();

@@ -117,9 +117,11 @@ function draw() {
 	if (x > paddleX && x < paddleX + paddleWidth/2) {
 		console.log('paddle left');
 	  dy = -dy;
+		dx = -4;
 	} else if (x > paddleX + paddleWidth/2 && x < paddleX + paddleWidth) {
 		console.log('paddle right');
 	  dy = -dy;
+		dx = 4;
 	} 
 	else {
 		console.log('one less life');

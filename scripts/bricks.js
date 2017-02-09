@@ -20,7 +20,7 @@ var brickOffsetTop = 30;
 var brickOffsetLeft = 30;
 var score = 0;
 var lives = 10;
-
+var permBrickY = 340;
 
 var bricks = [];
 for (c = 0; c < brickColumnCount; c++) {
@@ -66,8 +66,7 @@ function drawBricks() {
 
 function drawPermBricks(amount) {
 	var xSpace = (canvas.width / amount) - brickWidth * 1.25;
-	console.log(xSpace);
-	var brickY = 340;
+	var brickY = permBrickY;
 	var brickX = xSpace
 	for (var b = 0; b < amount; b++) {
 		ctx.beginPath();
@@ -75,6 +74,17 @@ function drawPermBricks(amount) {
 		ctx.fillStyle = "grey";
 		ctx.fill();
 		ctx.closePath();
+		if (y + dy > brickY && y < brickY + brickHeight) {
+			if ( x > brickX && x < brickX + brickWidth) {
+				console.log('permanent brick');
+				dy = -dy;
+			}
+		}
+		if (x === brickX || x === brickX + brickWidth) {
+			if (y > brickY && x < brickY + brickHeight) {
+				dx = -dx;
+			}
+		}
 		brickX += (xSpace + brickOffsetLeft) ;
 	}
 }
@@ -121,33 +131,33 @@ function draw() {
  collisionDetection();
 	
 // redirect ball
-	// left wall
+	// right & left wall
  if (x + dx > canvas.width - ballRadius || x + dx < ballRadius) {
 	dx = -dx;
  }
   //top
  if (y + dy < ballRadius) {
 	dy = -dy;
-	 console.log('top');
+//	 console.log('top');
  } else if (y + dy > canvas.height - ballRadius) {
 	if (x > paddleX && x < paddleX + paddleWidth/2) {
-		console.log('paddle left');
+//		console.log('paddle left');
 	  dy = -dy;
 		dx = -4;
 	} else if (x > paddleX + paddleWidth/2 && x < paddleX + paddleWidth) {
-		console.log('paddle right');
+//		console.log('paddle right');
 	  dy = -dy;
 		dx = 4;
-	} 
+	}
 	else {
-		console.log('one less life');
+//		console.log('one less life');
 		lives --;
 	 	if(!lives) {
-			console.log('game over');
+//			console.log('game over');
 			alert("Game Over!!!");
 			document.location.reload();
 		} else {
-			console.log('next life');
+//			console.log('next life');
 			x = canvas.width / 2;
 			y = canvas.height - 30;
 			dx = 4;
@@ -156,7 +166,7 @@ function draw() {
 		}
 		
 	}
- }
+ }	
  
 //move paddles
  if (rightPressed && paddleX < canvas.width - paddleWidth) {
